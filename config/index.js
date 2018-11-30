@@ -11,9 +11,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/blog': {
-          // 测试环境
-          target: 'https://127.0.0.1:8099',  // 接口域名
+      '/blog/**': {
+          // 测试环境http://127.0.0.1:8099
+          target: 'http://127.0.0.1:8099',  // 接口域名
           changeOrigin: true,  //是否跨域
           pathRewrite: {
               '^/blog': '/'   //需要rewrite重写的,

@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         initTable() {
-            this.$http.get('/blog/sysDic/list?pageNum=1&pageSize=10').then(res => {
+            this.$http.get('/blog/sysDic/list?pageNum=1&pageSize=10').then(function(res){
                 console.log(res)
             });
         },
