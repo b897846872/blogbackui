@@ -1,6 +1,14 @@
 <template>
   <div >
-    <Table :columns="dicCol" :data="dicData"></Table>
+    <Breadcrumb :style="{margin: '10px 0'}">
+        <BreadcrumbItem>系统管理</BreadcrumbItem>
+        <BreadcrumbItem>数据字典</BreadcrumbItem>
+    </Breadcrumb>
+    <Card>
+        <div style="min-height: 600px;">
+            <Table :columns="dicCol" :data="dicData"></Table>
+        </div>
+    </Card>
   </div>
 </template>
 
@@ -26,13 +34,11 @@ export default {
        }
     },
     created(){
-        console.log(666666666);
         this.initTable();
     },
     methods: {
         initTable() {
             this.$http.get('/blog/sysDic/list?pageNum=1&pageSize=10').then(function(res){
-                console.log(res)
             });
         },
     }
