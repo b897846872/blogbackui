@@ -7,7 +7,7 @@
     <Card>
         <div :style="{margin: '0 0 10px'}">
             <Input v-model="searchValue" placeholder="字典名称、字典编码、字典类型" @on-change="initTable" clearable style="width: 200px" />
-            <div style="float: right;"><Button type="primary" @click="dicModel = true;" ghost>添加</Button></div>
+            <div style="float: right;"><Button type="primary" @click="resetModel" ghost>添加</Button></div>
         </div>
         <div style="min-height: 600px;">
             <Table border :columns="dicCol" :data="dicData"></Table>
@@ -16,21 +16,24 @@
             </div>
         </div>
     </Card>
-    <!-- <Modal v-model="dicModel" :mask-closable="false" title="添加数据字典"
-        @on-ok="ok" >
-        <Form :model="formItem" :label-width="80">
-            <FormItem label="">
-                <Input v-model="formItem.input" placeholder="Enter something..."></Input>
+    <Modal v-model="dicModel" :mask-closable="false" title="添加数据字典"
+       >
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+            <FormItem label="字典名称" prop="dicName">
+                <Input v-model="formValidate.dicName" placeholder="请输入字典名称"></Input>
             </FormItem>
-            <FormItem label="Select">
-                <Select v-model="formItem.select">
-                    <Option value="beijing">New York</Option>
-                    <Option value="shanghai">London</Option>
-                    <Option value="shenzhen">Sydney</Option>
-                </Select>
+            <FormItem label="字典编码" prop="dicCode">
+                <Input v-model="formValidate.dicCode" placeholder="请输入字典编码"></Input>
+            </FormItem>
+            <FormItem label="字典类型" prop="dicType">
+                <Input v-model="formValidate.dicType" placeholder="请输入字典类型"></Input>
             </FormItem>
         </Form>
-    </Modal> -->
+        <div slot="footer">
+            <Button type="primary" @click="handleSubmit('formValidate')">确认</Button>
+            <Button @click="dicModel = false;">取消</Button>
+        </div>
+    </Modal>
   </div>
 </template>
 
@@ -99,7 +102,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.updateDic(params.row.id);
+                                        this.updateDicModel(params.row);
                                     }
                                 }
                             }, '修改')
@@ -109,6 +112,17 @@ export default {
             ],
             dicData: [],
             dicModel: false,
+            formValidate: {
+              id: '',
+              dicName: '',
+              dicCode: '',
+              dicType: '',
+            },
+            ruleValidate: {
+              dicName: [{ required: true, message: '字典名称不能为空', trigger: 'blur' }],
+              dicCode: [{ required: true, message: '字典编码不能为空', trigger: 'blur' }],
+              dicType: [{ required: true, message: '字典类型不能为空', trigger: 'blur' }],
+            },
        }
     },
     created(){
@@ -129,18 +143,62 @@ export default {
         deleteDic(id) {
             this.$http.delete('/blog/sysDic/delete?id='+id).then(function(res){
                 if (res.data.code === 0) {
+                    this.$Message.success('删除成功');
                     this.initTable();
+                } else {
+                    this.$Message.error(res.data.message);
                 }
             });
+        },
+        handleSubmit(name) {
+          this.$refs[name].validate((valid) => {
+              if (valid) {
+                if (this.formValidate.id === '') {
+                  this.$http.put('/blog/sysDic/save', this.formValidate).then(function(res){
+                      if (res.data.code === 0) {
+                        this.$Message.success('保存成功');
+                        this.dicModel = false;
+                        this.$refs[name].resetFields();
+                        this.initTable();
+                      } else {
+                        this.$Message.error(res.data.message);
+                      }
+                  });                  
+                } else {
+                  this.updateDic(name);
+                }
+              }
+          })
+        },
+        resetModel() {
+          this.dicModel = true;
+          this.formValidate = {
+              id: '',
+              dicName: '',
+              dicCode: '',
+              dicType: '',
+          };
+          this.$refs['formValidate'].resetFields();
+        },
+        updateDicModel(obj) {
+          this.dicModel = true;
+          this.formValidate = obj;
         },
         updateDic() {
-            this.$http.put('/blog/sysDic/updateDicCode').then(function(res){
+            this.$http.put('/blog/sysDic/updateSysDic', this.formValidate).then(function(res){
                 if (res.data.code === 0) {
+                    this.$Message.success('修改成功');
+                    this.dicModel = false;
+                    this.initTable();
+                } else {
+                  this.$Message.error(res.data.message);
                 }
             });
         },
+        handleReset (name) {
+            this.$refs[name].resetFields();
+        }
     }
-
 }
 </script>
 

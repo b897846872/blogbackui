@@ -25,10 +25,10 @@
                                 <Icon type="ios-stats" />
                                 系统管理
                             </template>
-                                <MenuItem name="Loglist" to="Loglist">系统日志</MenuItem>
-                                <MenuItem name="Diclist" to="Diclist">数据字典</MenuItem>
-                                <MenuItem name="3-7">系统配置</MenuItem>
-                                <MenuItem name="3-2">用户管理</MenuItem>
+                                <MenuItem name="Log" to="Log">系统日志</MenuItem>
+                                <MenuItem name="Dic" to="Dic">数据字典</MenuItem>
+                                <MenuItem name="Config" to="Config">系统配置</MenuItem>
+                                <MenuItem name="User" to="User">用户管理</MenuItem>
                                 <MenuItem name="3-1">个人信息</MenuItem>
                                 <MenuItem name="3-3">角色管理</MenuItem>
                                 <MenuItem name="3-4">菜单管理</MenuItem>

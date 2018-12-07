@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Diclist from '@/components/sysDic/sysDiclist.vue'
-import Loglist from '@/components/sysLog/sysLoglist.vue'
+import Dic from '@/components/sysDic.vue'
+import Log from '@/components/sysLog.vue'
+import Config from '@/components/sysConfig.vue'
+import User from '@/components/sysUser.vue'
 import Layout from '@/components/layout.vue'
 
 Vue.use(Router)
@@ -9,18 +11,28 @@ Vue.use(Router)
 var childrenRouter = [
   {
     path: '/',
-    name: 'Diclist',
-    component: Diclist
+    name: 'Dic',
+    component: Dic
   },
   {
-    path: 'Loglist',
-    name: 'Loglist',
-    component: Loglist
+    path: 'Log',
+    name: 'Log',
+    component: Log
   },
   {
-    path: 'Diclist',
-    name: 'Diclist',
-    component: Diclist
+    path: 'Dic',
+    name: 'Dic',
+    component: Dic
+  },
+  {
+    path: 'Config',
+    name: 'Config',
+    component: Config
+  },
+  {
+    path: 'User',
+    name: 'User',
+    component: User
   },
 ];
 export default new Router({

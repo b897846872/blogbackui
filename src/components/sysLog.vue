@@ -54,13 +54,6 @@ export default {
                     render: (h, params) => {
                             return h('div', new Date(params.row.createTime).toLocaleString());
                     }
-                },
-                {
-                    title: '修改时间',
-                    key: 'updateTime',
-                    render: (h, params) => {
-                            return h('div', new Date(params.row.updateTime).toLocaleString());
-                    }
                 }
             ],
             logData: [],

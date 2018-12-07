@@ -20,6 +20,15 @@ new Vue({
   template: '<App/>'
 })
 
+router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start();
+  next();
+});
+
+router.afterEach(route => {
+  iView.LoadingBar.finish();
+});
+
 /**
  * 日期格式化
  */
