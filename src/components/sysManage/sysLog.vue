@@ -52,7 +52,7 @@ export default {
                     title: '创建时间',
                     key: 'createTime',
                     render: (h, params) => {
-                            return h('div', new Date(params.row.createTime).toLocaleString());
+                            return h('div', params.row.createTime?new Date(params.row.createTime).toLocaleString():'');
                     }
                 }
             ],

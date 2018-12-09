@@ -14,11 +14,12 @@
                                 <Icon type="ios-stats" />
                                 内容管理
                             </template>
-                                <MenuItem name="2-1" > 文章管理</MenuItem>
-                                <MenuItem name="2-2">随笔管理</MenuItem>
-                                <MenuItem name="2-3">相册管理</MenuItem>
-                                <MenuItem name="2-4">资源贴管理</MenuItem>
-                                <MenuItem name="2-5">评论管理</MenuItem>
+                                <MenuItem name="Articlelist" to="Articlelist">文章管理</MenuItem>
+                                <MenuItem name="Essaylist" to="Essaylist">随笔管理</MenuItem>
+                                <MenuItem name="Albumlist" to="Albumlist">相册管理</MenuItem>
+                                <MenuItem name="Resourcelist" to="Resourcelist">资源贴管理</MenuItem>
+                                <MenuItem name="Comment" to="Comment">评论管理</MenuItem>
+                                <MenuItem name="Category" to="Category">分类管理</MenuItem>
                         </Submenu>                       
                         <Submenu name="3">
                             <template slot="title">
@@ -29,7 +30,7 @@
                                 <MenuItem name="Dic" to="Dic">数据字典</MenuItem>
                                 <MenuItem name="Config" to="Config">系统配置</MenuItem>
                                 <MenuItem name="User" to="User">用户管理</MenuItem>
-                                <MenuItem name="3-1">个人信息</MenuItem>
+                                <MenuItem name="UserInfo" to="UserInfo">个人信息</MenuItem>
                                 <MenuItem name="3-3">角色管理</MenuItem>
                                 <MenuItem name="3-4">菜单管理</MenuItem>
                         </Submenu>

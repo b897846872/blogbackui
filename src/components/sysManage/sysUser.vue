@@ -10,28 +10,37 @@
             <div style="float: right;"><Button type="primary" @click="resetModel" ghost>添加</Button></div>
         </div>
         <div style="min-height: 600px;">
-            <Table border :columns="dicCol" :data="dicData"></Table>
+            <Table border :columns="userCol" :data="userData"></Table>
             <div style="float: right; margin: 10px">
                 <Page :current="current" :total="total" @on-change="tableChange" :page-size="pageSize" show-total/>
             </div>
         </div>
     </Card>
-    <Modal v-model="dicModel" :mask-closable="false" title="添加数据字典"
+    <Modal v-model="userModel" :mask-closable="false" :title="formValidate.id?'修改用户':'添加用户'"
        >
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-            <FormItem label="字典名称" prop="dicName">
-                <Input v-model="formValidate.dicName" placeholder="请输入字典名称"></Input>
+            <FormItem label="名字" prop="realName">
+                <Input v-model="formValidate.realName" placeholder="请输入名字"></Input>
             </FormItem>
-            <FormItem label="字典编码" prop="dicCode">
-                <Input v-model="formValidate.dicCode" placeholder="请输入字典编码"></Input>
+            <FormItem label="登录名" prop="loginName">
+                <Input v-model="formValidate.loginName" placeholder="请输入登录名"></Input>
             </FormItem>
-            <FormItem label="字典类型" prop="dicType">
-                <Input v-model="formValidate.dicType" placeholder="请输入字典类型"></Input>
+            <FormItem label="密码" prop="password" v-if="!formValidate.id">
+                <Input type="password" v-model="formValidate.password" placeholder="请输入密码"></Input>
+            </FormItem>
+            <FormItem label="确认密码" prop="oncePassword" v-if="!formValidate.id">
+                <Input type="password" v-model="formValidate.oncePassword" placeholder="请再次输入密码"></Input>
+            </FormItem>
+            <FormItem label="邮箱" prop="email">
+                <Input v-model="formValidate.email" placeholder="请输入邮箱"></Input>
+            </FormItem>
+            <FormItem label="电话" prop="phone">
+                <Input v-model="formValidate.phone" placeholder="请输入电话"></Input>
             </FormItem>
         </Form>
         <div slot="footer">
             <Button type="primary" @click="handleSubmit('formValidate')">确认</Button>
-            <Button @click="dicModel = false;">取消</Button>
+            <Button @click="userModel = false;">取消</Button>
         </div>
     </Modal>
   </div>
@@ -40,12 +49,32 @@
 <script>
 export default {
     data () {
+        const validatePass = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入密码'));
+            } else {
+                if (this.formValidate.oncePassword !== '') {
+                    // 对第二个密码框单独验证
+                    this.$refs.formValidate.validateField('oncePassword');
+                }
+                callback();
+            }
+        };
+        const validatePassCheck = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请再次输入密码'));
+            } else if (value !== this.formValidate.password) {
+                callback(new Error('两次输入密码不一致！'));
+            } else {
+                callback();
+            }
+        };
        return{
             current: 1,
             total: 0,
             pageSize: 10,
             searchValue: '',
-            dicCol: [
+            userCol: [
                 {
                     type: 'index',
                     align: 'center',
@@ -75,21 +104,21 @@ export default {
                     title: '最后一次登录时间',
                     key: 'lastLoginTime',
                     render: (h, params) => {
-                            return h('div', new Date(params.row.lastLoginTime).toLocaleString());
+                            return h('div', params.row.lastLoginTime?new Date(params.row.lastLoginTime).toLocaleString():'');
                     }
                 },
                 {
                     title: '创建时间',
                     key: 'createTime',
                     render: (h, params) => {
-                            return h('div', new Date(params.row.createTime).toLocaleString());
+                            return h('div', params.row.createTime?new Date(params.row.createTime).toLocaleString():'');
                     }
                 },
                 {
                     title: '修改时间',
                     key: 'updateTime',
                     render: (h, params) => {
-                            return h('div', new Date(params.row.updateTime).toLocaleString());
+                            return h('div', params.row.updateTime?new Date(params.row.updateTime).toLocaleString():'');
                     }
                 },
                 {
@@ -106,7 +135,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.deleteDic(params.row.id);
+                                        this.deleteUser(params.row.id);
                                     }
                                 }
                             }, '删除'),
@@ -117,7 +146,7 @@ export default {
                                 },
                                 on: {
                                     click: () => {
-                                        this.updateDicModel(params.row);
+                                        this.updateUserModel(params.row);
                                     }
                                 }
                             }, '修改')
@@ -125,18 +154,24 @@ export default {
                     }
                 }
             ],
-            dicData: [],
-            dicModel: false,
+            userData: [],
+            userModel: false,
             formValidate: {
               id: '',
-              dicName: '',
-              dicCode: '',
-              dicType: '',
+              realName: '',
+              loginName: '',
+              password: '',
+              oncePassword: '',
+              email: '',
+              phone: '',
             },
             ruleValidate: {
-              dicName: [{ required: true, message: '字典名称不能为空', trigger: 'blur' }],
-              dicCode: [{ required: true, message: '字典编码不能为空', trigger: 'blur' }],
-              dicType: [{ required: true, message: '字典类型不能为空', trigger: 'blur' }],
+              realName: [{ required: true, message: '名字不能为空', trigger: 'blur' }],
+              loginName: [{ required: true, message: '登录名不能为空', trigger: 'blur' }],
+              password: [{ required: true, message: '密码不能为空', trigger: 'blur'},{ validator: validatePass, trigger: 'blur' }],
+              oncePassword: [ { required: true, message: '请再次输入密码', trigger: 'blur'},{ validator: validatePassCheck, trigger: 'blur' }],
+              email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
+              phone: [{ required: true, message: '电话不能为空', trigger: 'blur' }],
             },
        }
     },
@@ -146,7 +181,7 @@ export default {
     methods: {
         initTable() {
             this.$http.get('/blog/user/list?pageNum='+this.current+'&pageSize='+this.pageSize+'&searchValue='+this.searchValue).then(function(res){
-                this.dicData = res.data.data.list;
+                this.userData = res.data.data.list;
                 this.current = res.data.data.pageNum;
                 this.total = res.data.data.total;
             });
@@ -155,8 +190,8 @@ export default {
             this.current = curr;
             this.initTable();
         },
-        deleteDic(id) {
-            this.$http.delete('/blog/sysDic/delete?id='+id).then(function(res){
+        deleteUser(id) {
+            this.$http.delete('/blog/user/delete?id='+id).then(function(res){
                 if (res.data.code === 0) {
                     this.$Message.success('删除成功');
                     this.initTable();
@@ -169,10 +204,10 @@ export default {
           this.$refs[name].validate((valid) => {
               if (valid) {
                 if (this.formValidate.id === '') {
-                  this.$http.put('/blog/sysDic/save', this.formValidate).then(function(res){
+                  this.$http.put('/blog/user/save', this.formValidate).then(function(res){
                       if (res.data.code === 0) {
                         this.$Message.success('保存成功');
-                        this.dicModel = false;
+                        this.userModel = false;
                         this.$refs[name].resetFields();
                         this.initTable();
                       } else {
@@ -180,30 +215,38 @@ export default {
                       }
                   });
                 } else {
-                  this.updateDic(name);
+                  this.updateUser(name);
                 }
               }
           })
         },
         resetModel() {
-          this.dicModel = true;
+          this.userModel = true;
           this.formValidate = {
               id: '',
-              dicName: '',
-              dicCode: '',
-              dicType: '',
+              userName: '',
+              userCode: '',
+              userType: '',
           };
           this.$refs['formValidate'].resetFields();
         },
-        updateDicModel(obj) {
-          this.dicModel = true;
-          this.formValidate = obj;
+        updateUserModel(obj) {
+            this.userModel = true;
+            this.formValidate = {
+                id: obj.id,
+                realName: obj.realName,
+                loginName: obj.loginName,
+                password: '',
+                oncePassword: '',
+                email: obj.email,
+                phone: obj.phone
+            };
         },
-        updateDic() {
-            this.$http.put('/blog/sysDic/updateSysDic', this.formValidate).then(function(res){
+        updateUser() {
+            this.$http.put('/blog/user/update', this.formValidate).then(function(res){
                 if (res.data.code === 0) {
                     this.$Message.success('修改成功');
-                    this.dicModel = false;
+                    this.userModel = false;
                     this.initTable();
                 } else {
                   this.$Message.error(res.data.message);
