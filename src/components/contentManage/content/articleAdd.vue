@@ -22,7 +22,7 @@
                 </Select>
             </FormItem>
             <FormItem label="内容" prop="content">
-                <mavon-editor v-model="formValidate.content" @imgAdd="imgAdd" @imgDel="imgDel" style="z-index:10;"/>
+              <editor id="tinymce" v-model="formValidate.content" :init="this.GLOBAL.editorInit"></editor>
             </FormItem>
         </Form>
         <Button type="primary" @click="handleSubmit('formValidate')">确认</Button>
@@ -64,30 +64,7 @@ export default {
               this.categorylist = res.data.data;
             });          
         },
-        imgAdd(pos, $file){
-            // 第一步.将图片上传到服务器.
-            console.log(pos, $file);
-           var formdata = new FormData();
-           formdata.append('image', $file);
-           this.$http.post('server url', formdata).then(function(res){
-             console.log(res);
-             $vm.$img2Url(pos, url);
-           });
-          //  axios({
-          //      url: 'server url',
-          //      method: 'post',
-          //      data: formdata,
-          //      headers: { 'Content-Type': 'multipart/form-data' },
-          //  }).then((url) => {
-          //      // 第二步.将返回的url替换到文本原位置![...](0) -> ![...](url)
-          //      /**
-          //      * $vm 指为mavonEditor实例，可以通过如下两种方式获取
-          //      * 1. 通过引入对象获取: `import {mavonEditor} from ...` 等方式引入后，`$vm`为`mavonEditor`
-          //      * 2. 通过$refs获取: html声明ref : `<mavon-editor ref=md ></mavon-editor>，`$vm`为 `this.$refs.md`
-          //      */
-          //      $vm.$img2Url(pos, url);
-          //  })
-        },
+        
         handleSubmit(name) {
           this.$refs[name].validate((valid) => {
               if (valid) {

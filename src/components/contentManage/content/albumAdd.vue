@@ -16,7 +16,7 @@
                 </Select>
             </FormItem>
             <FormItem label="内容" prop="content">
-                <mavon-editor v-model="formValidate.content" style="z-index:10;"/>
+                <editor id="tinymce" v-model="formValidate.content" :init="this.GLOBAL.editorInit"></editor>
             </FormItem>
         </Form>
         <Button type="primary" @click="handleSubmit('formValidate')">确认</Button>

@@ -40,7 +40,7 @@
             <Content :style="{padding: '0 20px'}" style="min-height: 600px;">
                 <router-view/>
             </Content>
-            <Footer class="layout-footer-center">&copy; blogBack</Footer>
+            <Footer class="layout-footer-center">&copy; blogBack 2018.12</Footer>
         </Layout>
     </div>
 </template>

@@ -6,14 +6,19 @@ import router from './router'
 import VueResource from 'vue-resource'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
+import tinymce from 'tinymce/tinymce'
+import 'tinymce/themes/modern/theme'
+import Editor from '@tinymce/tinymce-vue'
+import global_ from './components/global.vue'//引用文件
 
+//全局变量
+Vue.prototype.GLOBAL = global_//挂载到Vue实例上面
 Vue.use(iView);
-Vue.use(mavonEditor)
 Vue.config.productionTip = false
 // ajax
 Vue.use(VueResource)
+// 注册组件tinymce 富文本编辑器
+Vue.component('Editor', Editor)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -22,6 +27,7 @@ new Vue({
   template: '<App/>'
 })
 
+// 加载组件。。。
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
   next();
