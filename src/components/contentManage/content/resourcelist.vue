@@ -105,7 +105,18 @@ export default {
                                         this.updateResource(params.row);
                                     }
                                 }
-                            }, '修改')
+                            }, '修改'),
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.viewResource(params.row);
+                                    }
+                                }
+                            }, '预览')
                         ]);
                     }
                 }
@@ -149,6 +160,15 @@ export default {
         addResource() {
             this.$router.push({ path:'ResourceAdd'});
         },
+        viewResource() {
+          this.$router.push({ 
+                name:'ViewPage',
+                params: {
+                  viewObj: obj,
+                  backPage: 'Resourcelist'
+                }
+          });          
+        }
     }
 }
 </script>

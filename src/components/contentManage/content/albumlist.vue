@@ -105,7 +105,18 @@ export default {
                                         this.updateAlbum(params.row);
                                     }
                                 }
-                            }, '修改')
+                            }, '修改'),
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.viewArticle(params.row);
+                                    }
+                                }
+                            }, '预览')
                         ]);
                     }
                 }
@@ -149,6 +160,15 @@ export default {
         addAlbum() {
             this.$router.push({ path:'AlbumAdd'});
         },
+        viewAlbum(obj) {
+          this.$router.push({ 
+                name:'ViewPage',
+                params: {
+                  viewObj: obj,
+                  backPage: 'Albumlist'
+                }
+          });
+        }
     }
 }
 </script>

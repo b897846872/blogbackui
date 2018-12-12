@@ -88,7 +88,7 @@ export default {
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
-                    width: 150,
+                    width: 160,
                     render: (h, params) => {
                         return h('ButtonGroup', [
                           h('Button', {
@@ -120,7 +120,7 @@ export default {
                               },
                               on: {
                                   click: () => {
-                                      this.viewArticle(params.row.id);
+                                      this.viewArticle(params.row);
                                   }
                               }
                           }, '预览')
@@ -168,7 +168,13 @@ export default {
           this.$router.push({ path:'ArticleAdd'});
         },
         viewArticle(obj) {
-          
+          this.$router.push({ 
+                name:'ViewPage',
+                params: {
+                  viewObj: obj,
+                  backPage: 'Articlelist'
+                }
+          });          
         },
     }
 }

@@ -105,7 +105,18 @@ export default {
                                         this.updateEssay(params.row);
                                     }
                                 }
-                            }, '修改')
+                            }, '修改'),
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.viewEssay(params.row);
+                                    }
+                                }
+                            }, '预览')
                         ]);
                     }
                 }
@@ -149,6 +160,15 @@ export default {
         addEssay() {
             this.$router.push({ path:'EssayAdd'});
         },
+        viewEssay(obj) {
+          this.$router.push({ 
+                name:'ViewPage',
+                params: {
+                  viewObj: obj,
+                  backPage: 'Essaylist'
+                }
+          });
+        }
     }
 }
 </script>

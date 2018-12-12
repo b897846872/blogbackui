@@ -38,3 +38,6 @@ npm install tinymce -S
 
 tinymce 默认是英文界面，所以还需要下载一个[中文语言包](https://www.tiny.cloud/get-tiny/language-packages/)。
 
+## 权限
+VUE前端按钮权限控制
+https://blog.csdn.net/lhc1105/article/details/78807189
