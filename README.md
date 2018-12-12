@@ -31,8 +31,9 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## 安装富文本tinymce
 
+``` bash
 npm install tinymce -S
 
 安装之后，在 node_modules 中找到 tinymce/skins 目录，然后将 skins 目录拷贝到 static 目录下
-
 tinymce 默认是英文界面，所以还需要下载一个[中文语言包](https://www.tiny.cloud/get-tiny/language-packages/)
+```
