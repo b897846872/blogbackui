@@ -10,6 +10,7 @@ import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/modern/theme'
 import Editor from '@tinymce/tinymce-vue'
 import global_ from './components/global.vue'//引用文件
+import './assets/css/global.css'
 
 //全局变量
 Vue.prototype.GLOBAL = global_//挂载到Vue实例上面

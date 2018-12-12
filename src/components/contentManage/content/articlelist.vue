@@ -91,28 +91,39 @@ export default {
                     width: 150,
                     render: (h, params) => {
                         return h('ButtonGroup', [
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.deleteArticle(params.row.id);
-                                    }
-                                }
-                            }, '删除'),
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.updateArticle(params.row);
-                                    }
-                                }
-                            }, '修改')
+                          h('Button', {
+                              props: {
+                                  type: 'text',
+                                  size: 'small'
+                              },
+                              on: {
+                                  click: () => {
+                                      this.updateArticle(params.row);
+                                  }
+                              }
+                          }, '修改'),
+                          h('Button', {
+                              props: {
+                                  type: 'text',
+                                  size: 'small'
+                              },
+                              on: {
+                                  click: () => {
+                                      this.deleteArticle(params.row.id);
+                                  }
+                              }
+                          }, '删除'),
+                          h('Button', {
+                              props: {
+                                  type: 'text',
+                                  size: 'small'
+                              },
+                              on: {
+                                  click: () => {
+                                      this.viewArticle(params.row.id);
+                                  }
+                              }
+                          }, '预览')
                         ]);
                     }
                 }
@@ -146,15 +157,18 @@ export default {
             });
         },
         updateArticle(obj) {
-             this.$router.push({ 
-                    name:'ArticleAdd',
-                    params: {
-                        articleObj: obj
-                    }
-                 });
+          this.$router.push({ 
+                name:'ArticleAdd',
+                params: {
+                    articleObj: obj
+                }
+          });
         },
         addArticle() {
-            this.$router.push({ path:'ArticleAdd'});
+          this.$router.push({ path:'ArticleAdd'});
+        },
+        viewArticle(obj) {
+          
         },
     }
 }

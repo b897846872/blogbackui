@@ -1,0 +1,12 @@
+.bottom-fixed{ 
+  background:#F4F4F4; 
+  width:100%; 
+  padding:15px 20px; 
+  box-sizing: border-box;
+  position: fixed; 
+  bottom: 0;
+  z-index: 10; 
+  margin-left:-20px ; 
+  text-align: right;
+  box-shadow: 0 5px 10px 9px rgba(0,0,0,0.12);
+}

@@ -25,9 +25,11 @@
               <editor id="tinymce" v-model="formValidate.content" :init="this.GLOBAL.editorInit"></editor>
             </FormItem>
         </Form>
-        <Button type="primary" @click="handleSubmit('formValidate')">确认</Button>
-        <Button @click="back">返回</Button>
     </Card>
+    <div class="bottom-fixed">
+        <Button @click="handleSubmit('formValidate')" style="width:80px" type="primary">保存</Button>
+        <Button @click="back" style="margin-left: 8px; width:80px">返回</Button>
+    </div>
   </div>
 </template>
 

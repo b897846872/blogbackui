@@ -36,6 +36,7 @@ const editorInit = {
 
       if (!json || typeof json.location != 'string') {
       // failure('Invalid JSON: ' + xhr.responseText);
+      console.log(json.data);
       success(json.data);
       return;
       }
