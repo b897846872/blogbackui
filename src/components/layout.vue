@@ -9,7 +9,15 @@
                             <Icon type="ios-paper" />
                             用户管理
                         </MenuItem> -->
-                        <Submenu name="2">
+                        <Submenu v-for="item in mainlist" :name="item.id" :key="item.id">
+                            <template slot="title">
+                                <Icon type="ios-stats" />
+                                {{ item.name }}
+                            </template>
+                                <MenuItem v-if="item.id === itemson.parentId" v-for="itemson in menulist" :name="itemson.url" :key="itemson.url" 
+                                  :to="itemson.url">{{ itemson.name }}</MenuItem>
+                        </Submenu>
+                        <!-- <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-stats" />
                                 内容管理
@@ -33,7 +41,8 @@
                                 <MenuItem name="UserInfo" to="UserInfo">个人信息</MenuItem>
                                 <MenuItem name="3-3">角色管理</MenuItem>
                                 <MenuItem name="3-4">菜单管理</MenuItem>
-                        </Submenu>
+                                <MenuItem name="Login" to="Login">测试登录页</MenuItem>
+                        </Submenu> -->
                     </div>
                 </Menu>
             </Header>
@@ -48,9 +57,34 @@
     export default {
         data () {
             return {
-                theme1: 'light'
+                theme1: 'light',
+                userId: '1',
+                menulist: [],
+                mainlist: [],
+                functionlist: [],
             }
-        }       
+        },
+        created(){
+            this.initmenu();
+        },        
+        methods: {
+          initmenu() {
+            this.$http.get('/blog/permission/findSysPermissionByUserId?userId='+this.userId).then(function(res){
+                if (res.data.code === 0) {
+                  for(var i=0; i<res.data.data.length; i++){
+                    if (res.data.data[i].type === 'main') {
+                      this.mainlist.push(res.data.data[i]);
+                    } else if (res.data.data[i].type === 'menu') {
+                      this.menulist.push(res.data.data[i]);
+                    } else if (res.data.data[i].type === 'function') {
+                      this.functionlist.push(res.data.data[i]);
+                    }
+                  }
+                  sessionStorage.setItem("buttenpremissions",JSON.stringify(this.functionlist));
+                }
+            });
+          }
+        }
     }
 </script>
 <style scoped>

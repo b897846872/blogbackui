@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/components/layout.vue'
+import Login from '@/components/login.vue'
 import Dic from '@/components/sysManage/sysDic.vue'
 import Log from '@/components/sysManage/sysLog.vue'
 import Config from '@/components/sysManage/sysConfig.vue'
@@ -106,6 +107,11 @@ var childrenRouter = [
     path: 'ViewPage',
     name: 'ViewPage',
     component: ViewPage
+  },
+  {
+    path: 'Login',
+    name: 'Login',
+    component: Login
   },
 ];
 export default new Router({

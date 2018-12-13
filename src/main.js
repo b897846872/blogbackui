@@ -20,14 +20,35 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 // 注册组件tinymce 富文本编辑器
 Vue.component('Editor', Editor)
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
-})
-
+/**
+ * 权限指令
+ */
+Vue.directive('has', {
+  bind: function(el, binding) { 
+    if (!Vue.prototype.$_has(binding.value)) { 
+      el.parentNode.removeChild(el); 
+    } 
+  }
+});
+/**
+ * 权限检查方法
+ */
+Vue.prototype.$_has = function(value) {
+  // debugger 
+  let isExist=false; 
+  let buttonpermsStr=sessionStorage.getItem("buttenpremissions"); 
+  if(buttonpermsStr==undefined || buttonpermsStr==null){ 
+    return false; 
+  } 
+  let buttonperms=JSON.parse(buttonpermsStr); 
+  for(let i=0;i<buttonperms.length;i++){ 
+    if(buttonperms[i].code.indexOf(value)>-1){ 
+      isExist=true; 
+      break; 
+    }
+  }
+  return isExist; 
+};
 // 加载组件。。。
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
@@ -37,7 +58,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach(route => {
   iView.LoadingBar.finish();
 });
-
 /**
  * 日期格式化
  */
@@ -63,3 +83,10 @@ Vue.prototype.getNowFormatDate = function() {
   var currentdate = year + seperator1 + month + seperator1 + strDate;
   return currentdate;
 };
+/* eslint-disable no-new */
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
+})
