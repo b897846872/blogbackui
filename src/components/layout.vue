@@ -17,7 +17,7 @@
                                 <MenuItem v-if="item.id === itemson.parentId" v-for="itemson in menulist" :name="itemson.url" :key="itemson.url" 
                                   :to="itemson.url">{{ itemson.name }}</MenuItem>
                         </Submenu>
-                        <!-- <Submenu name="2">
+                        <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-stats" />
                                 内容管理
@@ -40,9 +40,9 @@
                                 <MenuItem name="User" to="User">用户管理</MenuItem>
                                 <MenuItem name="UserInfo" to="UserInfo">个人信息</MenuItem>
                                 <MenuItem name="3-3">角色管理</MenuItem>
-                                <MenuItem name="3-4">菜单管理</MenuItem>
+                                <MenuItem name="SysMenu" to="SysMenu">菜单管理</MenuItem>
                                 <MenuItem name="Login" to="Login">测试登录页</MenuItem>
-                        </Submenu> -->
+                        </Submenu>
                     </div>
                 </Menu>
             </Header>

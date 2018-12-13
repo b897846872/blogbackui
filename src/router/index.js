@@ -7,6 +7,7 @@ import Log from '@/components/sysManage/sysLog.vue'
 import Config from '@/components/sysManage/sysConfig.vue'
 import User from '@/components/sysManage/sysUser.vue'
 import UserInfo from '@/components/sysManage/userInfo.vue'
+import SysMenu from '@/components/sysManage/sysMenu.vue'
 import Articlelist from '@/components/contentManage/content/articlelist.vue'
 import ArticleAdd from '@/components/contentManage/content/articleAdd.vue'
 import Essaylist from '@/components/contentManage/content/essaylist.vue'
@@ -112,6 +113,11 @@ var childrenRouter = [
     path: 'Login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: 'SysMenu',
+    name: 'SysMenu',
+    component: SysMenu
   },
 ];
 export default new Router({
