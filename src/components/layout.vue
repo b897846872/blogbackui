@@ -9,14 +9,14 @@
                             <Icon type="ios-paper" />
                             用户管理
                         </MenuItem> -->
-                        <Submenu v-for="item in mainlist" :name="item.id" :key="item.id">
+                        <!-- <Submenu v-for="item in mainlist" :name="item.id" :key="item.id">
                             <template slot="title">
                                 <Icon type="ios-stats" />
                                 {{ item.name }}
                             </template>
                                 <MenuItem v-if="item.id === itemson.parentId" v-for="itemson in menulist" :name="itemson.url" :key="itemson.url" 
                                   :to="itemson.url">{{ itemson.name }}</MenuItem>
-                        </Submenu>
+                        </Submenu> -->
                         <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-stats" />
@@ -39,7 +39,7 @@
                                 <MenuItem name="Config" to="Config">系统配置</MenuItem>
                                 <MenuItem name="User" to="User">用户管理</MenuItem>
                                 <MenuItem name="UserInfo" to="UserInfo">个人信息</MenuItem>
-                                <MenuItem name="3-3">角色管理</MenuItem>
+                                <MenuItem name="Role" to="Role">角色管理</MenuItem>
                                 <MenuItem name="SysMenu" to="SysMenu">菜单管理</MenuItem>
                                 <MenuItem name="Login" to="Login">测试登录页</MenuItem>
                         </Submenu>

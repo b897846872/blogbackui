@@ -7,7 +7,7 @@
     <Card>
         <div :style="{margin: '0 0 10px'}">
             <Input v-model="searchValue" placeholder="标题、内容" @on-change="initTable" clearable style="width: 200px" />
-            <div style="float: right;"><Button v-has="'article_delete'" type="primary" @click="addArticle" ghost>添加</Button></div>
+            <div style="float: right;"><Button v-has="'article_add'" type="primary" @click="addArticle" ghost>添加</Button></div>
         </div>
         <div style="min-height: 600px;">
             <Table border :columns="articleCol" :data="articleData"></Table>
@@ -101,9 +101,12 @@ export default {
                                       this.updateArticle(params.row);
                                   }
                               },
-                              binding: {
-                                has: "article_update"
-                              }
+                              directives: [
+                                  {
+                                    name: 'has',
+                                    value: 'article_update',
+                                  }
+                              ]
                           }, '修改'),
                           h('Button', {
                               props: {
@@ -115,9 +118,12 @@ export default {
                                       this.deleteArticle(params.row.id);
                                   }
                               },
-                              binding: {
-                                has: "'article_delete'"
-                              }
+                              directives: [
+                                  {
+                                    name: 'has',
+                                    value: 'article_delete',
+                                  }
+                              ]
                           }, '删除'),
                           h('Button', {
                               props: {
