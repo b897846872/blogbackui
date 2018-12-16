@@ -28,6 +28,14 @@
             <Button @click="roleModel = false;">取消</Button>
         </div>
     </Modal>
+    <Modal v-model="permissionModel" :mask-closable="false" title="权限授权"
+       >
+         <Tree ref="tree" :data="treeData" show-checkbox></Tree>
+        <div slot="footer">
+            <Button type="primary" @click="addRolePermission">确认</Button>
+            <Button @click="permissionModel = false;">取消</Button>
+        </div>
+    </Modal>
   </div>
 </template>
 
@@ -71,9 +79,31 @@ export default {
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
-                    width: 150,
+                    width: 200,
                     render: (h, params) => {
                         return h('ButtonGroup', [
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.permissionAdd(params.row.id);
+                                    }
+                                }
+                            }, '权限授权'),
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.updateRoleModel(params.row);
+                                    }
+                                }
+                            }, '修改'),
                             h('Button', {
                                 props: {
                                     type: 'text',
@@ -85,17 +115,6 @@ export default {
                                     }
                                 }
                             }, '删除'),
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.updateRoleModel(params.row);
-                                    }
-                                }
-                            }, '修改')
                         ]);
                     }
                 }
@@ -109,6 +128,9 @@ export default {
             ruleValidate: {
               name: [{ required: true, message: '角色名称不能为空', trigger: 'blur' }],
             },
+            treeData: [],
+            permissionModel: false,
+            roleId: '',
        }
     },
     created(){
@@ -184,6 +206,24 @@ export default {
         },
         handleReset (name) {
             this.$refs[name].resetFields();
+        },
+        permissionAdd(id) {
+            this.roleId = id;
+            this.$http.get('/blog/permission/findSysPermissionByRoleId?roleId='+id).then(function(res){
+                this.treeData = res.data.data;
+            });
+            this.permissionModel = true;
+        },
+        addRolePermission() {
+            var treeCheck = this.$refs['tree'].getCheckedNodes();
+            this.$http.put('/blog/role/saveRolePermission?roleId='+this.roleId, treeCheck).then(function(res){
+                if (res.data.code === 0) {
+                    this.$Message.success('添加成功');
+                    this.permissionModel = false;
+                } else {
+                    this.$Message.error(res.data.message);
+                }
+            });
         }
     }
 }

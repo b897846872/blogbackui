@@ -37,21 +37,22 @@
 		methods: {
 			login: function() {
 				var _this = this;
-				// this.$http.post('/icms-aoms/index', {
-				// 		un: this.un,
-				// 		pw: this.pw
-				// 	}, {
-				// 		emulateJSON: true
-				// 	})
-				// 	.then(function(res) {
-				// 		_this.message = res.data.message;
-				// 		if(res.data.code == 0){
-				// 			this.$router.push("/index");
-				// 		}
-				// 		else{
-				// 			this.$Modal.error(res.data.message);
-				// 			}
-				// 	});
+				this.$http.post('/blog/index', {
+						loginName: this.un,
+						password: this.pw
+					})
+					.then(function(res) {
+						// this.$router.push({ path:'Layout'});
+						// this.$router.push({name: 'Layout'});
+						this.$router.push("/layout");
+						// _this.message = res.data.message;
+						// if(res.data.code == 0){
+						// 	// this.$router.push("/index");
+						// }
+						// else{
+						// 	this.$Modal.error(res.data.message);
+						// 	}
+					});
 			}
 		}
 	}

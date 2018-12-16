@@ -22,7 +22,7 @@
                                 <Icon type="ios-stats" />
                                 内容管理
                             </template>
-                                <MenuItem name="Articlelist" to="Articlelist">文章管理</MenuItem>
+                                <MenuItem name="Articlelist" to="layout/Articlelist">文章管理</MenuItem>
                                 <MenuItem name="Essaylist" to="Essaylist">随笔管理</MenuItem>
                                 <MenuItem name="Albumlist" to="Albumlist">相册管理</MenuItem>
                                 <MenuItem name="Resourcelist" to="Resourcelist">资源贴管理</MenuItem>
@@ -41,7 +41,6 @@
                                 <MenuItem name="UserInfo" to="UserInfo">个人信息</MenuItem>
                                 <MenuItem name="Role" to="Role">角色管理</MenuItem>
                                 <MenuItem name="SysMenu" to="SysMenu">菜单管理</MenuItem>
-                                <MenuItem name="Login" to="Login">测试登录页</MenuItem>
                         </Submenu>
                     </div>
                 </Menu>

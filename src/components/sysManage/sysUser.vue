@@ -43,6 +43,15 @@
             <Button @click="userModel = false;">取消</Button>
         </div>
     </Modal>
+    <Modal v-model="roleModel" :mask-closable="false" title="分配角色"
+       >
+        <Table border :columns="roleCol" :data="roleData" @on-select-all-cancel="selectAllCancelRole" @on-select-all="selectAllRole"
+            @on-select="selectRole" @on-select-cancel="cancelRole"></Table>
+        <div slot="footer">
+            <Button type="primary" @click="addUserRole()">确认</Button>
+            <Button @click="roleModel = false;">取消</Button>
+        </div>
+    </Modal>
   </div>
 </template>
 
@@ -125,9 +134,31 @@ export default {
                     title: '操作',
                     key: 'action',
                     fixed: 'right',
-                    width: 150,
+                    width: 200,
                     render: (h, params) => {
                         return h('ButtonGroup', [
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.roleTabModel(params.row);
+                                    }
+                                }
+                            }, '分配角色'),
+                            h('Button', {
+                                props: {
+                                    type: 'text',
+                                    size: 'small'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.updateUserModel(params.row);
+                                    }
+                                }
+                            }, '修改'),
                             h('Button', {
                                 props: {
                                     type: 'text',
@@ -139,17 +170,6 @@ export default {
                                     }
                                 }
                             }, '删除'),
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.updateUserModel(params.row);
-                                    }
-                                }
-                            }, '修改')
                         ]);
                     }
                 }
@@ -173,6 +193,42 @@ export default {
               email: [{ required: true, message: '邮箱不能为空', trigger: 'blur' }],
               phone: [{ required: true, message: '电话不能为空', trigger: 'blur' }],
             },
+            roleCol: [
+                {
+                    type: 'selection',
+                    width: 60,
+                    align: 'center'
+                },
+                {
+                    title: '角色名称',
+                    key: 'name'
+                },
+                {
+                    title: '创建人',
+                    key: 'loginName'
+                },
+                {
+                    title: '创建时间',
+                    key: 'createTime',
+                    render: (h, params) => {
+                            return h('div', params.row.createTime?new Date(params.row.createTime).toLocaleString():'');
+                    }
+                },
+                {
+                    title: '修改时间',
+                    key: 'updateTime',
+                    render: (h, params) => {
+                            return h('div', params.row.updateTime?new Date(params.row.updateTime).toLocaleString():'');
+                    }
+                }
+            ],
+            roleData: [],
+            roleModel: false,
+            rolecurrent: 1,
+            roletotal: 0,
+            rolepageSize: 10,
+            userId: '',
+            selectRoleData: [],
        }
     },
     created(){
@@ -255,6 +311,37 @@ export default {
         },
         handleReset (name) {
             this.$refs[name].resetFields();
+        },
+        roleTabModel(obj) {
+            this.$http.get('/blog/role/findUserRoleTab?pageNum='+this.rolecurrent+'&pageSize='+this.rolepageSize+'&userId='+obj.id).then(function(res){
+                this.roleData = res.data.data.list;
+                this.rolecurrent = res.data.data.pageNum;
+                this.roletotal = res.data.data.total;
+            });
+            this.userId = obj.id;
+            this.roleModel = true;
+        },
+        selectRole(selection, row) {
+            this.selectRoleData = selection;
+        },
+        cancelRole(selection, row) {
+            this.selectRoleData = selection;
+        },
+        selectAllRole(selection) {
+            this.selectRoleData = selection;
+        },
+        selectAllCancelRole(selection) {
+            this.selectRoleData = selection;
+        },
+        addUserRole() {
+            this.$http.put('/blog/user/saveUserRole?userId='+this.userId, this.selectRoleData).then(function(res){
+                if (res.data.code === 0) {
+                    this.$Message.success('分配成功');
+                    this.roleModel = false;
+                } else {
+                    this.$Message.error(res.data.message);
+                }
+            });
         }
     }
 }

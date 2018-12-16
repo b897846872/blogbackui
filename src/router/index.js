@@ -27,8 +27,8 @@ Vue.use(Router)
 var childrenRouter = [
   {
     path: '/',
-    name: 'Dic',
-    component: Dic
+    name: 'Articlelist',
+    component: Articlelist
   },
   {
     path: 'Log',
@@ -111,11 +111,6 @@ var childrenRouter = [
     component: ViewPage
   },
   {
-    path: 'Login',
-    name: 'Login',
-    component: Login
-  },
-  {
     path: 'SysMenu',
     name: 'SysMenu',
     component: SysMenu
@@ -130,9 +125,15 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/layout',
       name: 'Layout',
       component: Layout,
       children: childrenRouter
-    }
+    },
+    
   ]
 })
