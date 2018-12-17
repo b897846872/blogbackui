@@ -6,10 +6,10 @@ import router from './router'
 import VueResource from 'vue-resource'
 import iView from 'iview';
 import 'iview/dist/styles/iview.css'
-import tinymce from 'tinymce/tinymce'
+import tinymce from 'tinymce/tinymce'// 富文本编辑器
 import 'tinymce/themes/modern/theme'
 import Editor from '@tinymce/tinymce-vue'
-import global_ from './components/global.vue'//引用文件
+import global_ from './components/global.vue'// 引用文件
 import './assets/css/global.css'
 
 //全局变量
@@ -52,11 +52,13 @@ Vue.prototype.$_has = function(value) {
 // 加载组件。。。
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
+  console.log('123');
   next();
 });
 
 router.afterEach(route => {
   iView.LoadingBar.finish();
+  console.log('456');
 });
 /**
  * 日期格式化

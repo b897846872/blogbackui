@@ -6,53 +6,63 @@
 		<div class="login-card">
 			<h1>博客后台管理系统 </h1>
 			<h3>version 1.0.0</h3>
-			<Form :label-width="0">
-		<FormItem prop="user">
-            <Input type="text" v-on:on-enter="login" v-model="un" placeholder="用户名"  style="width:100%;">
+			<Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="0">
+		    <FormItem prop="loginName">
+            <Input type="text" v-on:on-enter="login" v-model="formValidate.loginName" placeholder="请输入用户名"  style="width:100%;">
                 <Icon type="ios-person-outline" slot="prepend"></Icon>
             </Input>
         </FormItem>
         <FormItem prop="password">
-            <Input type="password" v-on:on-enter="login" v-model="pw" placeholder="密码" style="width:100%;">
-                <Icon type="locked" slot="prepend"></Icon>
+            <Input type="password" v-on:on-enter="login" v-model="formValidate.password" placeholder="请输入密码" style="width:100%;">
+                <Icon type="ios-lock" slot="prepend"></Icon>
             </Input>
         </FormItem>
         <FormItem>
             <Button type="primary" @click="login" shape="circle" long style="font-size:20px;">登录</Button>
         </FormItem>
-    </Form>
+      </Form>
 		</div>
 	</div>
 </template>
 <script>
-	import Vue from 'vue';
+  import Vue from 'vue';
+  import crypto from 'crypto'
 	export default {
 		data() {
 			return {
-				un: '',
-				pw: '',
-				message: ''
+				formValidate: {
+          loginName: '',
+          password: '',
+        },
+        ruleValidate: {
+          loginName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+          password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        }
 			}
 		},
 		methods: {
 			login: function() {
-				var _this = this;
-				this.$http.post('/blog/index', {
-						loginName: this.un,
-						password: this.pw
-					})
-					.then(function(res) {
-						// this.$router.push({ path:'Layout'});
-						// this.$router.push({name: 'Layout'});
-						this.$router.push("/layout");
-						// _this.message = res.data.message;
-						// if(res.data.code == 0){
-						// 	// this.$router.push("/index");
-						// }
-						// else{
-						// 	this.$Modal.error(res.data.message);
-						// 	}
-					});
+        // MD5加密
+        var md5 = crypto.createHash("md5");
+        md5.update(this.formValidate.password);
+        var passwordmd5 = md5.digest('hex');
+        var obj = {
+          loginName: this.formValidate.loginName,
+          password: passwordmd5,
+        };
+        this.$refs['formValidate'].validate((valid) => {
+            if (valid) {
+              this.$http.post('/blog/index', obj)
+              .then(function(res) {
+                if(res.data.code == 0){
+                  this.$router.push("/layout");
+                }
+                else{
+                  this.$Message.error(res.data.message);
+                }
+              });
+            }
+        })
 			}
 		}
 	}

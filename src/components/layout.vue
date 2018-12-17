@@ -22,7 +22,11 @@
                                 <Icon type="ios-stats" />
                                 内容管理
                             </template>
-                                <MenuItem name="Articlelist" to="layout/Articlelist">文章管理</MenuItem>
+                            <!-- <router-link :to="{'name':item2.router}"> 									
+                              <i :class="item2.menuIcon" style="font-size:6px;width: 8px;vertical-align: middle;"></i> 									
+                              <span>{{$t(item2.menuName)}}</span> 								
+                            </router-link> -->
+                                <MenuItem name="Articlelist" to="Articlelist">文章管理</MenuItem>
                                 <MenuItem name="Essaylist" to="Essaylist">随笔管理</MenuItem>
                                 <MenuItem name="Albumlist" to="Albumlist">相册管理</MenuItem>
                                 <MenuItem name="Resourcelist" to="Resourcelist">资源贴管理</MenuItem>

@@ -27,96 +27,95 @@ Vue.use(Router)
 var childrenRouter = [
   {
     path: '/',
-    name: 'Articlelist',
-    component: Articlelist
+    redirect: '/Articlelist',
   },
   {
-    path: 'Log',
+    path: '/Log',
     name: 'Log',
     component: Log
   },
   {
-    path: 'Dic',
+    path: '/Dic',
     name: 'Dic',
     component: Dic
   },
   {
-    path: 'Config',
+    path: '/Config',
     name: 'Config',
     component: Config
   },
   {
-    path: 'UserInfo',
+    path: '/UserInfo',
     name: 'UserInfo',
     component: UserInfo
   },
   {
-    path: 'User',
+    path: '/User',
     name: 'User',
     component: User
   },
   {
-    path: 'Articlelist',
+    path: '/Articlelist',
     name: 'Articlelist',
     component: Articlelist
   },
   {
-    path: 'ArticleAdd',
+    path: '/ArticleAdd',
     name: 'ArticleAdd',
     component: ArticleAdd
   },
   {
-    path: 'Category',
+    path: '/Category',
     name: 'Category',
     component: Category
   },
   {
-    path: 'Essaylist',
+    path: '/Essaylist',
     name: 'Essaylist',
     component: Essaylist
   },
   {
-    path: 'EssayAdd',
+    path: '/EssayAdd',
     name: 'EssayAdd',
     component: EssayAdd
   },
   {
-    path: 'Albumlist',
+    path: '/Albumlist',
     name: 'Albumlist',
     component: Albumlist
   },
   {
-    path: 'AlbumAdd',
+    path: '/AlbumAdd',
     name: 'AlbumAdd',
     component: AlbumAdd
   },
   {
-    path: 'Resourcelist',
+    path: '/Resourcelist',
     name: 'Resourcelist',
     component: Resourcelist
   },
   {
-    path: 'ResourceAdd',
+    path: '/ResourceAdd',
     name: 'ResourceAdd',
     component: ResourceAdd
   },
   {
-    path: 'Comment',
+    path: '/Comment',
     name: 'Comment',
     component: Comment
   },
   {
-    path: 'ViewPage',
+    path: '/ViewPage',
     name: 'ViewPage',
     component: ViewPage
   },
   {
-    path: 'SysMenu',
+    path: '/SysMenu',
     name: 'SysMenu',
     component: SysMenu
   },
   {
-    path: 'Role',
+    path: '/Role',
     name: 'Role',
     component: Role
   }
@@ -130,7 +129,6 @@ export default new Router({
     },
     {
       path: '/layout',
-      name: 'Layout',
       component: Layout,
       children: childrenRouter
     },

@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import crypto from 'crypto'
 export default {
     data () {
         const validatePass = (rule, value, callback) => {
@@ -258,9 +259,19 @@ export default {
         },
         handleSubmit(name) {
           this.$refs[name].validate((valid) => {
-              if (valid) {
+            if (valid) {
+                var md5 = crypto.createHash("md5");
+                md5.update(this.formValidate.password);
+                var passwordmd5 = md5.digest('hex');
+                var obj = {
+                    realName: this.formValidate.realName,
+                    loginName: this.formValidate.loginName,
+                    password: passwordmd5,
+                    email: this.formValidate.email,
+                    phone: this.formValidate.phone,
+                }
                 if (this.formValidate.id === '') {
-                  this.$http.put('/blog/user/save', this.formValidate).then(function(res){
+                  this.$http.put('/blog/user/save', obj).then(function(res){
                       if (res.data.code === 0) {
                         this.$Message.success('保存成功');
                         this.userModel = false;

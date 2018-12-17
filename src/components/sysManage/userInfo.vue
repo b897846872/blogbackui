@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import crypto from 'crypto'
 export default {
     data () {
         const validatePass = (rule, value, callback) => {
@@ -93,7 +94,10 @@ export default {
           this.userModel = true;
         },
         handleSubmit(name) {
-          this.userInfo.password = this.formValidate.password;
+          var md5 = crypto.createHash("md5");
+          md5.update(this.formValidate.password);
+          var passwordmd5 = md5.digest('hex');
+          this.userInfo.password = passwordmd5;
           this.$refs[name].validate((valid) => {
               if (valid) {
                 this.$http.put('/blog/user/updatePassword', this.userInfo).then(function(res){
