@@ -5,27 +5,19 @@
                 <Menu mode="horizontal" :theme="theme1" active-name="1">
                     <div class="layout-logo"></div>
                     <div class="layout-nav">
-                        <!-- <MenuItem name="1">
-                            <Icon type="ios-paper" />
-                            用户管理
-                        </MenuItem> -->
-                        <!-- <Submenu v-for="item in mainlist" :name="item.id" :key="item.id">
+                        <Submenu v-for="item in mainlist" :name="item.id" :key="item.id">
                             <template slot="title">
                                 <Icon type="ios-stats" />
                                 {{ item.name }}
                             </template>
                                 <MenuItem v-if="item.id === itemson.parentId" v-for="itemson in menulist" :name="itemson.url" :key="itemson.url" 
                                   :to="itemson.url">{{ itemson.name }}</MenuItem>
-                        </Submenu> -->
-                        <Submenu name="2">
+                        </Submenu>
+                        <!-- <Submenu name="2">
                             <template slot="title">
                                 <Icon type="ios-stats" />
                                 内容管理
                             </template>
-                            <!-- <router-link :to="{'name':item2.router}"> 									
-                              <i :class="item2.menuIcon" style="font-size:6px;width: 8px;vertical-align: middle;"></i> 									
-                              <span>{{$t(item2.menuName)}}</span> 								
-                            </router-link> -->
                                 <MenuItem name="Articlelist" to="Articlelist">文章管理</MenuItem>
                                 <MenuItem name="Essaylist" to="Essaylist">随笔管理</MenuItem>
                                 <MenuItem name="Albumlist" to="Albumlist">相册管理</MenuItem>
@@ -45,8 +37,14 @@
                                 <MenuItem name="UserInfo" to="UserInfo">个人信息</MenuItem>
                                 <MenuItem name="Role" to="Role">角色管理</MenuItem>
                                 <MenuItem name="SysMenu" to="SysMenu">菜单管理</MenuItem>
-                        </Submenu>
+                        </Submenu> -->
                     </div>
+                    <ul class="header-menu">
+                      <li class="header-menu-item">
+                      <Icon type="power"></Icon> <span v-on:click="logout">退出</span></li>
+                      <li class="header-menu-item">
+                      <Icon type="ios-person"></Icon> <span v-on:click="userInfo">{{ username }}</span></li>
+                    </ul>
                 </Menu>
             </Header>
             <Content :style="{padding: '0 20px'}" style="min-height: 600px;">
@@ -61,14 +59,17 @@
         data () {
             return {
                 theme1: 'light',
-                userId: '1',
+                userId: '',
                 menulist: [],
                 mainlist: [],
                 functionlist: [],
+                username: '',
             }
         },
         created(){
-            this.initmenu();
+          this.username = sessionStorage.getItem("username");
+          this.userId = sessionStorage.getItem("userId"); 
+          this.initmenu();
         },        
         methods: {
           initmenu() {
@@ -86,7 +87,20 @@
                   sessionStorage.setItem("buttenpremissions",JSON.stringify(this.functionlist));
                 }
             });
-          }
+          },
+          logout() {
+            this.$http.get('/blog/logout').then(function(res){
+                if (res.data.code === 0) {
+                  sessionStorage.clear();
+                  this.$router.push({ name:'Login'});
+                } else {
+                  this.$Message.error(res.data.message);
+                }
+            });
+          },
+          userInfo() {
+            this.$router.push({ name:'UserInfo'});
+          },
         }
     }
 </script>
@@ -111,6 +125,21 @@
     top: 15px;
     left: 20px;
 }
+
+.header-menu .header-menu-item {
+	list-style: none;
+    outline: 0;
+	float: right;
+	padding: 0 10px;
+	position: relative;
+	cursor: pointer;
+	z-index: 9;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+	height: 60px;
+	font-size: 14px;
+}
+.header-menu-item:hover{color: #5cadff;}
 .layout-nav{
     width: auto;
     margin: 0 auto;

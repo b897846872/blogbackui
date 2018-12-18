@@ -55,6 +55,8 @@
               this.$http.post('/blog/index', obj)
               .then(function(res) {
                 if(res.data.code == 0){
+                  sessionStorage.setItem("username",this.formValidate.loginName);
+                  sessionStorage.setItem("userId",res.data.data);
                   this.$router.push("/layout");
                 }
                 else{

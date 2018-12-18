@@ -52,13 +52,11 @@ Vue.prototype.$_has = function(value) {
 // 加载组件。。。
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start();
-  console.log('123');
   next();
 });
 
 router.afterEach(route => {
   iView.LoadingBar.finish();
-  console.log('456');
 });
 /**
  * 日期格式化
