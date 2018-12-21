@@ -41,3 +41,5 @@ tinymce 默认是英文界面，所以还需要下载一个[中文语言包](htt
 ## 权限
 VUE前端按钮权限控制
 https://blog.csdn.net/lhc1105/article/details/78807189
+
+http://www.cnblogs.com/smyhvae/p/4965163.html

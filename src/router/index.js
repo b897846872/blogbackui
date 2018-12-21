@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/components/layout.vue'
 import Login from '@/components/login.vue'
+import Welcome from '@/components/welcome.vue'
 import Dic from '@/components/sysManage/sysDic.vue'
 import Log from '@/components/sysManage/sysLog.vue'
 import Config from '@/components/sysManage/sysConfig.vue'
@@ -23,11 +24,16 @@ import ViewPage from '@/components/contentManage/content/viewPage.vue'
 
 
 Vue.use(Router)
-
+Welcome
 var childrenRouter = [
   {
     path: '/',
-    redirect: '/Articlelist',
+    redirect: '/Welcome',
+  },
+  {
+    path: '/Welcome',
+    name: 'Welcome',
+    component: Welcome
   },
   {
     path: '/Log',

@@ -7,7 +7,7 @@
     <Card>
         <div :style="{margin: '0 0 10px'}">
             <Input v-model="searchValue" placeholder="标题、内容" @on-change="initTable" clearable style="width: 200px" />
-            <div style="float: right;"><Button type="primary" @click="addResource" ghost>添加</Button></div>
+            <div style="float: right;"><Button type="primary" v-has="'resource_add'" @click="addResource" ghost>添加</Button></div>
         </div>
         <div style="min-height: 600px;">
             <Table border :columns="resourceCol" :data="resourceData"></Table>
@@ -93,7 +93,13 @@ export default {
                                     click: () => {
                                         this.deleteResource(params.row.id);
                                     }
-                                }
+                                },
+                                directives: [
+                                    {
+                                      name: 'has',
+                                      value: 'resource_delete',
+                                    }
+                                ]
                             }, '删除'),
                             h('Button', {
                                 props: {
@@ -104,7 +110,13 @@ export default {
                                     click: () => {
                                         this.updateResource(params.row);
                                     }
-                                }
+                                },
+                                directives: [
+                                    {
+                                      name: 'has',
+                                      value: 'resource_update',
+                                    }
+                                ]
                             }, '修改'),
                             h('Button', {
                                 props: {

@@ -58,7 +58,7 @@ export default {
             }
         };
        return{
-          id: '1',
+          id: '',
           userModel: false,
           userInfo: {
             id: '',
@@ -81,6 +81,7 @@ export default {
        }
     },
     created(){
+        this.id = sessionStorage.getItem("userId"); 
         this.initTable();
     },
     methods: {

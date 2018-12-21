@@ -5,6 +5,10 @@
                 <Menu mode="horizontal" :theme="theme1" active-name="1">
                     <div class="layout-logo"></div>
                     <div class="layout-nav">
+                        <MenuItem name="1" to="/Welcome">
+                            <Icon type="ios-paper" />
+                            总览
+                        </MenuItem>
                         <Submenu v-for="item in mainlist" :name="item.id" :key="item.id">
                             <template slot="title">
                                 <Icon type="ios-stats" />

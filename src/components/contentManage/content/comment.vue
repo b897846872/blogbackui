@@ -71,7 +71,13 @@ export default {
                                     click: () => {
                                         this.deleteComment(params.row.id);
                                     }
-                                }
+                                },
+                                directives: [
+                                    {
+                                      name: 'has',
+                                      value: 'comment_delete',
+                                    }
+                                ]
                             }, '删除')
                         ]);
                     }

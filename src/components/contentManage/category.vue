@@ -7,7 +7,7 @@
     <Card>
         <div :style="{margin: '0 0 10px'}">
             <Input v-model="searchValue" placeholder="分类名称、分类编码" @on-change="initTable" clearable style="width: 200px" />
-            <div style="float: right;"><Button type="primary" @click="resetModel" ghost>添加</Button></div>
+            <div style="float: right;"><Button type="primary" v-has="'category_add'" @click="resetModel" ghost>添加</Button></div>
         </div>
         <div style="min-height: 600px;">
             <Table border :columns="categoryCol" :data="categoryData"></Table>
@@ -95,7 +95,13 @@ export default {
                                     click: () => {
                                         this.deleteCategory(params.row.id);
                                     }
-                                }
+                                },
+                                directives: [
+                                    {
+                                      name: 'has',
+                                      value: 'category_delete',
+                                    }
+                                ]
                             }, '删除'),
                             h('Button', {
                                 props: {
@@ -106,7 +112,13 @@ export default {
                                     click: () => {
                                         this.updateCategoryModel(params.row);
                                     }
-                                }
+                                },
+                                directives: [
+                                    {
+                                      name: 'has',
+                                      value: 'category_update',
+                                    }
+                                ]
                             }, '修改')
                         ]);
                     }
