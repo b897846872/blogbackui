@@ -73,6 +73,7 @@
 	background: #fff url(../assets/login-bg.jpg) no-repeat top fixed;
 	background-size: 100% 100%;
 	background-size: cover;
+  background-position: center center;
 	height: 100%;
 	width: 100%;
 }
@@ -80,7 +81,7 @@
 .login-logo {}
 
 .login-bg {
-	padding: 10% 10% 0px 10%;
+	padding: 10% 5% 18.35% 40%;
 }
 
 .login-card {
@@ -89,6 +90,7 @@
 	background: #FFF;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   padding: 4% 5% 4%;
+  opacity:0.8;
 }
 
 .login-card h1 {
