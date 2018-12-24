@@ -8,19 +8,25 @@
       <div class="divclass1">
         <p class="pclass"><b>开始使用</b></p>
         <ul class="urlul">
-          <li><a to="ArticleAdd"><Icon type="ios-create" />添加文章</a></li>
-          <li><a><Icon type="ios-create" />添加随笔</a></li>
-          <li><a><Icon type="ios-create" />添加相册</a></li>
-          <li><a><Icon type="ios-create" />添加资源帖</a></li>
+          <router-link tag="li" to="/ArticleAdd">
+            <a><Icon type="ios-create" />添加文章</a>
+          </router-link>
+          <router-link tag="li" to="/EssayAdd">
+            <a><Icon type="ios-create" />添加随笔</a>
+          </router-link>
+          <router-link tag="li" to="/AlbumAdd">
+            <a><Icon type="ios-create" />添加相册</a>
+          </router-link>
+          <router-link tag="li" to="/ResourceAdd">
+            <a><Icon type="ios-create" />添加资源帖</a>
+          </router-link>
         </ul>
       </div>
       <div class="divclass2">
         <p class="pclass"><b>概述</b></p>
         <ul class="urlul">
-          <li><a><Icon type="ios-create" />添加文章</a></li>
-          <li><a><Icon type="ios-create" />添加随笔</a></li>
-          <li><a><Icon type="ios-create" />添加相册</a></li>
-          <li><a><Icon type="ios-create" />添加资源帖</a></li>
+          <li><a><Icon type="ios-create" />{{articleNum}}篇文章</a></li>
+          <li><a><Icon type="ios-create" />{{commentNum}}条评论</a></li>
         </ul>
       </div>
     </Card>
@@ -66,16 +72,23 @@ export default {
             content: [{ required: true, message: '内容不能为空', trigger: 'blur' }],
           },
           newData: [],
+          articleNum: 0,
+          commentNum: 0,
        }
     },
     created(){
       this.username = sessionStorage.getItem("username");
       this.initNew();
+      this.getNum();
     },
     methods: {
       initNew() {
         this.$http.get('/blog/tabArticle/list?pageNum=1&pageSize=6').then(function(res){
             this.newData = res.data.data.list;
+            this.articleNum = res.data.data.total;
+        });
+        this.$http.get('/blog/tabComment/list?pageNum=1&pageSize=1').then(function(res){
+            this.commentNum = res.data.data.total;
         });
       },
       handleSubmit(name) {
@@ -103,8 +116,8 @@ export default {
                 viewObj: obj,
                 backPage: 'Welcome'
               }
-        });          
-      }
+        });
+      },
     }
 }
 </script>
@@ -115,10 +128,10 @@ export default {
   padding: 5px 10px;
 }
 .divclass1{
-  display:inline-block;
+  display:inline-table;
 }
 .divclass2{
-  display:inline-block;
+  display:inline-table;
   margin: 0 0 0 100px;
 }
 .newdiv{
