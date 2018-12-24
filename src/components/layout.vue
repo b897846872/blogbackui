@@ -52,7 +52,9 @@
                 </Menu>
             </Header>
             <Content :style="{padding: '0 20px'}" style="min-height: 600px;">
+              <transition name="slide-fade">
                 <router-view/>
+              </transition>
             </Content>
             <Footer class="layout-footer-center">&copy; blogBack 2018.12</Footer>
         </Layout>
@@ -150,5 +152,16 @@
 }
 .layout-footer-center{
     text-align: center;
+}
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
