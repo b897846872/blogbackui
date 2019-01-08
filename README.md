@@ -14,6 +14,7 @@ blogbackui是一套基于Vue（Vue2.x + Vue-router2.x + Vuex）+ iview的前端�
 * 数据交互：Axios
 * 代码风格检测：Eslint
 * UI框架：iview 3.0
+* 富文本编辑框：tinymce
 
 ## 系统功能
 
