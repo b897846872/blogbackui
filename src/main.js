@@ -9,7 +9,7 @@ import 'iview/dist/styles/iview.css'
 import tinymce from 'tinymce/tinymce'// 富文本编辑器
 import 'tinymce/themes/modern/theme'
 import Editor from '@tinymce/tinymce-vue'
-import global_ from './components/global.vue'// 引用文件
+import global_ from './components/blogbackui/global.vue'// 引用文件
 import './assets/css/global.css'
 
 //全局变量

@@ -39,7 +39,9 @@
           password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
         }
 			}
-		},
+    },
+    created(){
+    },
 		methods: {
 			login: function() {
         // MD5加密
@@ -70,7 +72,7 @@
 	}
 </script>
 <style scoped>.login-bg {
-	background: #fff url(../assets/login-bg.jpg) no-repeat top fixed;
+	background: #fff url(../../assets/login-bg.jpg) no-repeat top fixed;
 	background-size: 100% 100%;
 	background-size: cover;
   background-position: center center;

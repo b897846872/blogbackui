@@ -1,27 +1,28 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/components/layout.vue'
-import Login from '@/components/login.vue'
-import Welcome from '@/components/welcome.vue'
-import Dic from '@/components/sysManage/sysDic.vue'
-import Log from '@/components/sysManage/sysLog.vue'
-import Config from '@/components/sysManage/sysConfig.vue'
-import User from '@/components/sysManage/sysUser.vue'
-import UserInfo from '@/components/sysManage/userInfo.vue'
-import SysMenu from '@/components/sysManage/sysMenu.vue'
-import Role from '@/components/sysManage/sysRole.vue'
-import Articlelist from '@/components/contentManage/content/articlelist.vue'
-import ArticleAdd from '@/components/contentManage/content/articleAdd.vue'
-import Essaylist from '@/components/contentManage/content/essaylist.vue'
-import EssayAdd from '@/components/contentManage/content/essayAdd.vue'
-import Albumlist from '@/components/contentManage/content/albumlist.vue'
-import AlbumAdd from '@/components/contentManage/content/albumAdd.vue'
-import Resourcelist from '@/components/contentManage/content/resourcelist.vue'
-import ResourceAdd from '@/components/contentManage/content/resourceAdd.vue'
-import Comment from '@/components/contentManage/content/comment.vue'
-import Category from '@/components/contentManage/category.vue'
-import ViewPage from '@/components/contentManage/content/viewPage.vue'
+import Layout from '@/components/blogbackui/layout.vue'
+import Login from '@/components/blogbackui/login.vue'
+import Welcome from '@/components/blogbackui/welcome.vue'
+import Dic from '@/components/blogbackui/sysManage/sysDic.vue'
+import Log from '@/components/blogbackui/sysManage/sysLog.vue'
+import Config from '@/components/blogbackui/sysManage/sysConfig.vue'
+import User from '@/components/blogbackui/sysManage/sysUser.vue'
+import UserInfo from '@/components/blogbackui/sysManage/userInfo.vue'
+import SysMenu from '@/components/blogbackui/sysManage/sysMenu.vue'
+import Role from '@/components/blogbackui/sysManage/sysRole.vue'
+import Articlelist from '@/components/blogbackui/contentManage/content/articlelist.vue'
+import ArticleAdd from '@/components/blogbackui/contentManage/content/articleAdd.vue'
+import Essaylist from '@/components/blogbackui/contentManage/content/essaylist.vue'
+import EssayAdd from '@/components/blogbackui/contentManage/content/essayAdd.vue'
+import Albumlist from '@/components/blogbackui/contentManage/content/albumlist.vue'
+import AlbumAdd from '@/components/blogbackui/contentManage/content/albumAdd.vue'
+import Resourcelist from '@/components/blogbackui/contentManage/content/resourcelist.vue'
+import ResourceAdd from '@/components/blogbackui/contentManage/content/resourceAdd.vue'
+import Comment from '@/components/blogbackui/contentManage/content/comment.vue'
+import Category from '@/components/blogbackui/contentManage/category.vue'
+import ViewPage from '@/components/blogbackui/contentManage/content/viewPage.vue'
 
+import LayoutFront from '@/components/blogfrontui/layout.vue'
 
 Vue.use(Router)
 Welcome
@@ -128,8 +129,13 @@ var childrenRouter = [
 ];
 export default new Router({
   routes: [
-    {
+    { 
       path: '/',
+      name: 'LayoutFront',
+      component: LayoutFront
+    },
+    { 
+      path: '/admin',
       name: 'Login',
       component: Login
     },
