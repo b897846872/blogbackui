@@ -41,12 +41,11 @@
                               <Time :time="item.createTime" />
                             </p>
                             <h4 class="title"><a href="/" class="link-title">
-                              {{item.title}}</a>
+                              [{{item.dicName}}]{{item.title}}</a>
                             </h4>
                             <div class="list-footer">
                               <span>阅读 {{ item.clicks ? item.clicks : 0 }}</span>
-                              <span> · 评论 53</span>
-                              <span> · 喜欢 17</span>
+                              <span> · 评论 {{item.commentNum}}</span>
                             </div>
                           </div>
                         </li>
@@ -92,7 +91,10 @@
                 this.showMoreButtonFlag =false;
               }
           });
-        }
+        },
+        viewSingle() {
+            
+        },
       }
     }
 </script>
