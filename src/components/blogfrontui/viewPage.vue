@@ -1,18 +1,17 @@
 <template>
   <div >
-    <Breadcrumb :style="{margin: '10px 0'}">
-        <BreadcrumbItem>{{ viewObj.title }}</BreadcrumbItem>
-    </Breadcrumb>
     <Card>
       <div>
         <h1 style="text-align:center;">{{ viewObj.title }}</h1>
+        <div style="text-align:center;">
+          <Tag color="primary" v-for="item in lablelist" :key="item.lid">
+            {{item.lableName}}
+          </Tag>
+        </div>
         <div v-html="viewObj.content" :style="{margin: '0 auto', width: '1000px'}">
         </div>
       </div>
     </Card>
-    <div class="bottom-fixed">
-        <Button @click="back" style="margin-left: 8px; width:80px" type="primary">返回</Button>
-    </div>
   </div>
 </template>
 
@@ -20,21 +19,28 @@
 export default {
     data () {
        return{
+          id: '',
           viewObj: '',
-          backPage: '',
+          lablelist: '',
        }
     },
     created(){
-      if (this.$route.params.viewObj) {
-        this.viewObj = this.$route.params.viewObj;
+      if (this.$route.params.id) {
+        this.id = this.$route.params.id;
       }
-      if (this.$route.params.backPage) {
-        this.backPage = this.$route.params.backPage;
-      }      
+      this.initViewObj();
+      this.initLableArticle();
     },
     methods: {
-      back() {
-        this.$router.push({ path:this.backPage});
+      initViewObj() {
+        this.$http.get('/blog/tabArticle/list?pageNum=1&pageSize=1&articleId='+this.id).then(function(res){
+            this.viewObj = res.data.data.list[0];
+        });
+      },
+      initLableArticle() {
+        this.$http.get('/blog/tabArticle/getLableArticle?id='+this.id).then(function(res){
+            this.lablelist = res.data.data;
+        });
       },
     }
 }

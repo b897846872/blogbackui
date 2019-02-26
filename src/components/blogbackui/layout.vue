@@ -52,9 +52,7 @@
                 </Menu>
             </Header>
             <Content :style="{padding: '0 20px'}" style="min-height: 600px;">
-              <transition name="slide-fade">
                 <router-view/>
-              </transition>
             </Content>
             <Footer class="layout-footer-center">&copy; blogBack 2018.12</Footer>
         </Layout>

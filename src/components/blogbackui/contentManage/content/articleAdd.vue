@@ -10,6 +10,12 @@
             <FormItem label="标题" prop="title">
                 <Input v-model="formValidate.title" placeholder="请输入标题" style="width: 400px"></Input>
             </FormItem>
+            <FormItem label="标签" prop="lableNamelist">
+                <Tag v-for="item in formValidate.lableNamelist" :key="item" :name="item" closable @on-close="handleCloseLable">
+                  {{ item }}
+                </Tag>
+                <Button icon="ios-add" type="dashed" size="small" @click="handleAddLablelist">添加标签</Button>
+            </FormItem>
             <FormItem label="是否原创" prop="hasOriginal">
                 <RadioGroup v-model="formValidate.hasOriginal">
                   <Radio label="0">是</Radio>
@@ -30,6 +36,17 @@
         <Button @click="handleSubmit('formValidate')" style="width:80px" type="primary">保存</Button>
         <Button @click="back" style="margin-left: 8px; width:80px">返回</Button>
     </div>
+    <Modal v-model="lableModel" :mask-closable="false" title="添加标签">
+        <Form :model="formLableValidate" :label-width="80">
+            <FormItem label="标签" prop="dicTypeName">
+                <Input v-model="formLableValidate.dicTypeName" placeholder="请输入标签"></Input>
+            </FormItem>
+        </Form>
+        <div slot="footer">
+            <Button type="primary" @click="handleLableSubmit()">确认</Button>
+            <Button @click="lableModel = false;">取消</Button>
+        </div>
+    </Modal>
   </div>
 </template>
 
@@ -44,6 +61,7 @@ export default {
               categoryId: '',
               content: '',
               typeId: '1',
+              lableNamelist: [],
             },
             ruleValidate: {
               title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
@@ -52,11 +70,16 @@ export default {
               content: [{ required: true, message: '内容不能为空', trigger: 'blur' }],
             },
             categorylist: [],
+            formLableValidate: {
+              dicTypeName: '',
+            },
+            lableModel: false,
        }
     },
     created(){
       if (this.$route.params.articleObj) {
         this.formValidate = this.$route.params.articleObj;
+        this.initLablelist();
       }
       this.initTypeSelect();
     },
@@ -66,7 +89,11 @@ export default {
               this.categorylist = res.data.data;
             });          
         },
-        
+        initLablelist() {
+          this.$http.get('/blog/tabArticle/listLable?id='+this.formValidate.id).then(function(res){
+              this.formValidate.lableNamelist = res.data.data;
+          });
+        },
         handleSubmit(name) {
           this.$refs[name].validate((valid) => {
               if (valid) {
@@ -98,6 +125,18 @@ export default {
         },
         back() {
           this.$router.push({ path:'Articlelist'});
+        },
+        handleLableSubmit() {
+          this.formValidate.lableNamelist.push(this.formLableValidate.dicTypeName);
+          this.lableModel = false;
+          this.formLableValidate.dicTypeName = '';
+        },
+        handleAddLablelist() {
+            this.lableModel = true;
+        },
+        handleCloseLable(event, name) {
+            const index = this.formValidate.lableNamelist.indexOf(name);
+            this.formValidate.lableNamelist.splice(index, 1);
         },
     }
 }

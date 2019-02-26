@@ -1,56 +1,75 @@
 <template>
-    <div class="layout">
-        <Layout>
-            <Header :style="{position: 'fixed', width: '100%'}">
-                <Menu mode="horizontal" theme="light" active-name="1">
-                    <div class="layout-logo"></div>
-                    <div class="layout-nav">
-                        <MenuItem name="1">
-                            <Icon type="ios-navigate"></Icon>
-                            首页
-                        </MenuItem>
-                        <MenuItem name="2">
-                            <Icon type="ios-keypad"></Icon>
-                            文章
-                        </MenuItem>
-                        <MenuItem name="3">
-                            <Icon type="ios-analytics"></Icon>
-                            随笔
-                        </MenuItem>
-                        <MenuItem name="4">
-                            <Icon type="ios-paper"></Icon>
-                            相册
-                        </MenuItem>
-                        <MenuItem name="5">
-                            <Icon type="ios-paper"></Icon>
-                            资源
-                        </MenuItem>
-                    </div>
-                    <div class="layout-search">
-                      <AutoComplete v-model="searchValue"  placeholder="请输入关键字" style="width:200px"></AutoComplete>
-                    </div>
-                </Menu>
-            </Header>
-            <Content :style="{margin: '70px 20px 0', background: '#fff', minHeight: '500px'}">
-                <router-view/>                
-            </Content>
-            <Footer class="layout-footer-center">2019 &copy; blog qi</Footer>
-        </Layout>
-    </div>
+  <div >
+    <Row>
+        <Col span="19" class="content-left">
+          <ul class="article-list list-unstyled clearfix">
+            <li class="article-item" v-for="item in contentData" :key="item.id"> 
+              <div>
+                <p class="list-top">
+                  <Time :time="item.createTime" />
+                </p>
+                <h4 class="title"><a @click="viewSingle(item.id)" class="link-title">
+                  [{{item.dicName}}]{{item.title}}</a>
+                </h4>
+                <div class="list-footer">
+                  <span>阅读 {{ item.clicks ? item.clicks : 0 }}</span>
+                  <span> · 评论 {{item.commentNum?item.commentNum:0}}</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- <div class="load-more" v-show="showMoreButtonFlag">
+            <button class="ladda-button" @click="showmorelist"><span class="ladda-label">点击查看更多</span></button>
+          </div> -->
+        </Col>
+        <Col span="5">
+        
+        </Col>
+        <BackTop height=100></BackTop>
+    </Row>    
+  </div>
 </template>
+
 <script>
-    export default {
-      data () {
+export default {
+    data () {
        return{
-         
+        pageSize: 12,
+        contentData: [],
+        searchValue: '',
+        showMoreButtonFlag: true,
        }
+    },
+    created(){
+      this.initlist();
+    },
+    methods: {
+      initlist() {
+        this.$http.get('/blog/tabArticle/list?pageNum=1&pageSize=' + this.pageSize).then(function(res){
+            this.contentData = res.data.data.list;
+        });
       },
-      created(){
+      showmorelist() {
+        this.pageSize = parseInt(this.pageSize) + 2;
+        this.$http.get('/blog/tabArticle/list?pageNum=1&pageSize=' + this.pageSize).then(function(res){
+            this.contentData = res.data.data.list;
+            if (this.pageSize == res.data.data.total) {
+              this.showMoreButtonFlag =false;
+            }
+        });
       },
-      methods: {
-      }
+      viewSingle(id) {
+        this.$router.push({ 
+            name:'ViewPageFront',
+            params: {
+              id: id
+            }
+        });
+      },
     }
+}
 </script>
+
 <style scoped>
     .layout{
         border: 1px solid #d7dde4;

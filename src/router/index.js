@@ -21,12 +21,13 @@ import User from '@/components/blogbackui/sysManage/sysUser.vue';
 import UserInfo from '@/components/blogbackui/sysManage/userInfo.vue';
 import Welcome from '@/components/blogbackui/welcome.vue';
 import LayoutFront from '@/components/blogfrontui/layout.vue';
+import ViewPageFront from '@/components/blogfrontui/viewPage.vue';
+import WelcomeFront from '@/components/blogfrontui/welcome.vue';
 import Vue from 'vue';
 import Router from 'vue-router';
 
 
 Vue.use(Router)
-Welcome
 var childrenRouter = [
   {
     path: '/',
@@ -133,17 +134,33 @@ var childrenRouter = [
     component: Role
   }
 ];
+var childrenRouterFront = [
+  {
+    path: '/',
+    redirect: '/WelcomeFront',
+  },
+  {
+    path: '/WelcomeFront',
+    name: 'WelcomeFront',
+    component: WelcomeFront
+  },
+  {
+    path: '/ViewPageFront',
+    name: 'ViewPageFront',
+    component: ViewPageFront
+  }
+];
 export default new Router({
   routes: [
     { 
       path: '/',
-      name: 'LayoutFront',
-      component: LayoutFront
+      component: LayoutFront,
+      children: childrenRouterFront
     },
     { 
       path: '/admin',
       name: 'Login',
-      component: Login
+      component: Login,
     },
     {
       path: '/layout',
