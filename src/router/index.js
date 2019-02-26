@@ -13,6 +13,7 @@ import Layout from '@/components/blogbackui/layout.vue';
 import Login from '@/components/blogbackui/login.vue';
 import Config from '@/components/blogbackui/sysManage/sysConfig.vue';
 import Dic from '@/components/blogbackui/sysManage/sysDic.vue';
+import DicType from '@/components/blogbackui/sysManage/sysDicType.vue';
 import Log from '@/components/blogbackui/sysManage/sysLog.vue';
 import SysMenu from '@/components/blogbackui/sysManage/sysMenu.vue';
 import Role from '@/components/blogbackui/sysManage/sysRole.vue';
@@ -45,6 +46,11 @@ var childrenRouter = [
     path: '/Dic',
     name: 'Dic',
     component: Dic
+  },
+  {
+    path: '/DicType',
+    name: 'DicType',
+    component: DicType
   },
   {
     path: '/Config',

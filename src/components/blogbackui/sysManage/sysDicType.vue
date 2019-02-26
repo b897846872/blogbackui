@@ -2,11 +2,11 @@
   <div >
     <Breadcrumb :style="{margin: '10px 0'}">
         <BreadcrumbItem>系统管理</BreadcrumbItem>
-        <BreadcrumbItem>数据字典</BreadcrumbItem>
+        <BreadcrumbItem>字典类型</BreadcrumbItem>
     </Breadcrumb>
     <Card>
         <div :style="{margin: '0 0 10px'}">
-            <Input v-model="searchValue" placeholder="字典名称、字典编码、字典类型" @on-change="initTable" clearable style="width: 200px" />
+            <Input v-model="searchValue" placeholder="字典类型" @on-change="initTable" clearable style="width: 200px" />
             <div style="float: right;"><Button type="primary" @click="resetModel" ghost>添加</Button></div>
         </div>
         <div style="min-height: 600px;">
@@ -16,19 +16,14 @@
             </div>
         </div>
     </Card>
-    <Modal v-model="dicModel" :mask-closable="false" :title="formValidate.id?'修改数据字典':'添加数据字典'"
+    <Modal v-model="dicModel" :mask-closable="false" :title="formValidate.id?'修改字典类型':'添加字典类型'"
        >
         <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-            <FormItem label="字典名称" prop="dicName">
-                <Input v-model="formValidate.dicName" placeholder="请输入字典名称"></Input>
+            <FormItem label="字典类型" prop="dicTypeName">
+                <Input v-model="formValidate.dicTypeName" placeholder="请输入字典类型"></Input>
             </FormItem>
-            <FormItem label="字典编码" prop="dicCode">
-                <Input v-model="formValidate.dicCode" placeholder="请输入字典编码"></Input>
-            </FormItem>
-            <FormItem label="字典类型" prop="dicType">
-                <Select v-model="formValidate.dicType" placeholder="请输入字典类型">
-                    <Option v-for="item in dicTypelist" :value="item.dicTypeName" :key="item.id">{{ item.dicTypeName }}</Option>
-                </Select>
+            <FormItem label="备注" prop="remark">
+                <Input v-model="formValidate.remark" placeholder="请输入备注"></Input>
             </FormItem>
         </Form>
         <div slot="footer">
@@ -54,16 +49,12 @@ export default {
                     width: 50
                 },
                 {
-                    title: '字典名称',
-                    key: 'dicName'
-                },
-                {
-                    title: '字典编码',
-                    key: 'dicCode'
-                },
-                {
                     title: '字典类型',
-                    key: 'dicType'
+                    key: 'dicTypeName'
+                },
+                {
+                    title: '备注',
+                    key: 'remark'
                 },
                 {
                     title: '创建时间',
@@ -86,28 +77,28 @@ export default {
                     width: 150,
                     render: (h, params) => {
                         return h('ButtonGroup', [
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.deleteDic(params.row.id);
-                                    }
-                                }
-                            }, '删除'),
-                            h('Button', {
-                                props: {
-                                    type: 'text',
-                                    size: 'small'
-                                },
-                                on: {
-                                    click: () => {
-                                        this.updateDicModel(params.row);
-                                    }
-                                }
-                            }, '修改')
+                          h('Button', {
+                              props: {
+                                  type: 'text',
+                                  size: 'small'
+                              },
+                              on: {
+                                  click: () => {
+                                      this.updateDicModel(params.row);
+                                  }
+                              }
+                          }, '修改'),
+                          h('Button', {
+                              props: {
+                                  type: 'text',
+                                  size: 'small'
+                              },
+                              on: {
+                                  click: () => {
+                                      this.deleteDic(params.row.id);
+                                  }
+                              }
+                          }, '删除'),
                         ]);
                     }
                 }
@@ -116,25 +107,20 @@ export default {
             dicModel: false,
             formValidate: {
               id: '',
-              dicName: '',
-              dicCode: '',
-              dicType: '',
+              dicTypeName: '',
+              remark: '',
             },
             ruleValidate: {
-              dicName: [{ required: true, message: '字典名称不能为空', trigger: 'blur' }],
-              dicCode: [{ required: true, message: '字典编码不能为空', trigger: 'blur' }],
-              dicType: [{ required: true, message: '字典类型不能为空', trigger: 'blur' }],
+              dicTypeName: [{ required: true, message: '字典类型不能为空', trigger: 'blur' }],
             },
-            dicTypelist: [],
        }
     },
     created(){
         this.initTable();
-        this.initDicType();
     },
     methods: {
         initTable() {
-            this.$http.get('/blog/sysDic/list?pageNum='+this.current+'&pageSize='+this.pageSize+'&searchValue='+this.searchValue).then(function(res){
+            this.$http.get('/blog/sysDicType/list?pageNum='+this.current+'&pageSize='+this.pageSize+'&searchValue='+this.searchValue).then(function(res){
                 this.dicData = res.data.data.list;
                 this.current = res.data.data.pageNum;
                 this.total = res.data.data.total;
@@ -144,13 +130,8 @@ export default {
             this.current = curr;
             this.initTable();
         },
-        initDicType() {
-            this.$http.get('/blog/sysDicType/listDicType').then(function(res){
-                this.dicTypelist = res.data.data;
-            });
-        },
         deleteDic(id) {
-            this.$http.delete('/blog/sysDic/delete?id='+id).then(function(res){
+            this.$http.delete('/blog/sysDicType/delete?id='+id).then(function(res){
                 if (res.data.code === 0) {
                     this.$Message.success('删除成功');
                     this.initTable();
@@ -163,7 +144,7 @@ export default {
           this.$refs[name].validate((valid) => {
               if (valid) {
                 if (this.formValidate.id === '') {
-                  this.$http.put('/blog/sysDic/save', this.formValidate).then(function(res){
+                  this.$http.put('/blog/sysDicType/save', this.formValidate).then(function(res){
                       if (res.data.code === 0) {
                         this.$Message.success('保存成功');
                         this.dicModel = false;
@@ -183,23 +164,22 @@ export default {
           this.dicModel = true;
           this.formValidate = {
               id: '',
-              dicName: '',
-              dicCode: '',
-              dicType: '',
+              dicTypeName: '',
+              remark: '',
           };
           this.$refs['formValidate'].resetFields();
         },
         updateDicModel(obj) {
           this.dicModel = true;
+          console.log(obj);
           this.formValidate = {
               id: obj.id,
-              dicName: obj.dicName,
-              dicCode: obj.dicCode,
-              dicType: obj.dicType,
+              dicTypeName: obj.dicTypeName,
+              remark: obj.remark,
           };
         },
         updateDic() {
-            this.$http.put('/blog/sysDic/updateSysDic', this.formValidate).then(function(res){
+            this.$http.put('/blog/sysDicType/updateSysDic', this.formValidate).then(function(res){
                 if (res.data.code === 0) {
                     this.$Message.success('修改成功');
                     this.dicModel = false;
