@@ -23,6 +23,7 @@ import Welcome from '@/components/blogbackui/welcome.vue';
 import LayoutFront from '@/components/blogfrontui/layout.vue';
 import ViewPageFront from '@/components/blogfrontui/viewPage.vue';
 import WelcomeFront from '@/components/blogfrontui/welcome.vue';
+import ResultPage from '@/components/blogfrontui/resultPage.vue';
 import Vue from 'vue';
 import Router from 'vue-router';
 
@@ -148,6 +149,11 @@ var childrenRouterFront = [
     path: '/ViewPageFront',
     name: 'ViewPageFront',
     component: ViewPageFront
+  },
+  {
+    path: '/ResultPage',
+    name: 'ResultPage',
+    component: ResultPage
   }
 ];
 export default new Router({
