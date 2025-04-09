@@ -191,12 +191,6 @@
         <mxCell id="8nB9XYCQa37DBbd3Wuok-56" value="10.通知生成结果给业务组" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="195" y="708" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="8nB9XYCQa37DBbd3Wuok-60" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1" source="aM9ryv3xv72pqoxQDRHE-5" target="8nB9XYCQa37DBbd3Wuok-1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="370" y="850" as="sourcePoint" />
-            <mxPoint x="420" y="800" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="8nB9XYCQa37DBbd3Wuok-61" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="355.5" y="820" as="sourcePoint" />
