@@ -89,7 +89,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="nw4yh5n6GvbLldcTkkvz-35" value="数据层" style="swimlane;startSize=20;html=1;" parent="1" vertex="1">
-          <mxGeometry x="890" y="60" width="200" height="640" as="geometry" />
+          <mxGeometry x="890" y="60" width="205" height="640" as="geometry" />
         </mxCell>
         <mxCell id="nw4yh5n6GvbLldcTkkvz-22" value="" style="html=1;verticalLabelPosition=bottom;align=center;labelBackgroundColor=#ffffff;verticalAlign=top;strokeWidth=2;strokeColor=#0080F0;shadow=0;dashed=0;shape=mxgraph.ios7.icons.data;" parent="nw4yh5n6GvbLldcTkkvz-35" vertex="1">
           <mxGeometry x="80" y="180" width="40" height="49.1" as="geometry" />
